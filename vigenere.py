@@ -1,7 +1,5 @@
-# Remove all characters that are not alphabetic
-def stripText(plaintext):
-    new_plaintext = ''.join([i for i in plaintext if i.isalpha()])
-    return new_plaintext
+import random
+import string
 
 # Repeat the keyword until equal length with plaintext
 def repeatKey(plaintext, key):
@@ -22,10 +20,18 @@ def autoKey(plaintext, key):
         for i in range(len(plaintext) - len(key)):
             key.append(plaintext[i])
     return(''.join(key))
- 
+
+def generateTable(seed):
+    table = []
+    for i in range(26):
+        order = list(string.ascii_lowercase)
+        random.Random(i+seed).shuffle(order)
+        table.append(order)
+    return table
+    
 # MAIN FUNCTIONS
 
-# Standard Vigenere Cypher
+# Standard Vigenere Cipher
 def encryptStandard(plaintext, key):
     key = repeatKey(plaintext, key)
     ciphertext = []
@@ -42,7 +48,7 @@ def decryptStandard(ciphertext, key):
         plaintext.append(chr(x)) 
     return("" . join(plaintext))
 
-# Extended Vigenere Cypher
+# Extended Vigenere Cipher
 def encryptExtended(plaintext, key):
     key = repeatKey(plaintext, key)
     ciphertext = []
@@ -78,13 +84,38 @@ def decryptAutoKey(ciphertext, key):
         plaintext.append(chr(x))
     return("" . join(plaintext))
 
-'''
-string = 'ini contoh sebuah kalimat'
-key = '//hehehe'
-plaintext = stripText(string)
+# Full Vigenere Cipher
+def encryptFull(plaintext, key, seed):
+    if (not key.isalpha()):
+        return('Error: Key can only be alphabetic')
+    else:
+        key = repeatKey(plaintext, key)
+        table = generateTable(seed)
+        ciphertext = []
+        for x in range(len(plaintext)):
+            i = ord(key[x]) - ord('a')
+            j = ord(plaintext[x]) - ord('a')
+            ciphertext.append(table[i][j])
+        return("" . join(ciphertext))
 
-ciphertext = encryptAutoKey(plaintext, key)
-deciphered_text = decryptAutoKey(ciphertext, key)
-print("encrypted text : ", ciphertext)
-print("decrypted text : ", deciphered_text)
+def decryptFull(ciphertext, key, seed):
+    if (not key.isalpha()):
+        return('Error: Key can only be alphabetic')
+    else:
+        key = repeatKey(ciphertext, key)
+        table = generateTable(seed)
+        plaintext = []
+        for x in range(len(ciphertext)):
+            i = ord(key[x]) - ord('a')
+            j = table[i].index(ciphertext[x])
+            plaintext.append(chr(j + ord('a')))
+        return("" . join(plaintext))
+
+'''
+key = 'hehehe'
+plaintext = 'inicontohsebuahkalimat'
+ciphertext = encryptFull(plaintext, key, 1)
+deciphered_text = decryptFull(ciphertext, key, 1)
+print("encrypted text:", ciphertext)
+print("decrypted text:", deciphered_text)
 '''
