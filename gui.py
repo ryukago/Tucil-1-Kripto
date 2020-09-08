@@ -8,7 +8,8 @@ fields_menu = 'Input Type', 'Action', 'Algorithm'
 
 input_types = [
     "Text",
-    "File"
+    "File Text",
+    "File Random"
 ] 
 
 actions = [
@@ -66,15 +67,21 @@ def fetch(entries):
     printResult(res)
 
 def printResult(res):
-    if (entries[0][1].get() == "Text"):
+    if ((entries[0][1].get() == "Text") or (entries[0][1].get() == "File Text")):
         result.set(res)
         if (entries[1][1].get() == "Encrypt"):
             spaced_result.set(getSpacedResult(res))
+            printResultFile(res)
         elif (entries[1][1].get() == "Decrypt"):
             spaced_result.set("")
     else:
         result.set("")
         spaced_result.set("")
+
+def printResultFile(res):
+    text_file = open("Encrypt.txt", "w")
+    text_file.write(res)
+    text_file.close()
 
 def getText(entries):
     if (entries[0][1].get() == "Text"):
@@ -86,7 +93,9 @@ def getText(entries):
             result = ''.join(i for i in result if not i.isdigit())
             result = result.translate(str.maketrans('', '', string.punctuation))
             return result.lower()
-    elif (entries[0][1].get() == "File"):
+    elif (entries[0][1].get() == "File Text"):
+        pass # baca dari file
+    elif (entries[0][1].get() == "File Random"):
         pass # baca dari file
 
 def getKey(entries):
