@@ -30,6 +30,7 @@ algorithms = [
 
 result = ""
 spaced_result = ""
+filename = ""
 
 def fetch(entries):
     # for entry in entries:
@@ -71,7 +72,7 @@ def printResult(res):
         result.set(res)
         if (entries[1][1].get() == "Encrypt"):
             spaced_result.set(getSpacedResult(res))
-            printResultFile(res)
+            printResultFile(res) #print ke file
         elif (entries[1][1].get() == "Decrypt"):
             spaced_result.set("")
     else:
@@ -84,8 +85,14 @@ def printResultFile(res):
     text_file.close()
 
 def getText(entries):
-    if (entries[0][1].get() == "Text"):
-        result = entries[3][1].get()
+    if ((entries[0][1].get() == "Text") or (entries[0][1].get() == "File Text")):
+        # Asal inputnya, dari form atau file
+        if (entries[0][1].get() == "Text"):
+            result = entries[3][1].get()
+        elif (entries[0][1].get() == "File Text"):
+            text_file = open(filename, "r")
+            result = text_file.read()
+        # Remove numbers, puncuations, spaces
         if (entries[2][1].get() == "Extended Vigenere Cipher"):
             return result
         else:
@@ -93,8 +100,7 @@ def getText(entries):
             result = ''.join(i for i in result if not i.isdigit())
             result = result.translate(str.maketrans('', '', string.punctuation))
             return result.lower()
-    elif (entries[0][1].get() == "File Text"):
-        pass # baca dari file
+            
     elif (entries[0][1].get() == "File Random"):
         pass # baca dari file
 
@@ -108,8 +114,8 @@ def getKey(entries):
         return result
 
 def UploadAction(event=None):
+    global filename
     filename = filedialog.askopenfilename()
-    print('Selected:', filename)
 
 def chooseMenu(menu_label):
     if (menu_label == "Input Type"):
