@@ -22,8 +22,8 @@ algorithms = [
     "Extended Vigenere Cipher",
     "Playfair Cipher",
     "Super Enkripsi",
-    "Affine Chiper",
-    "Hill Chiper"
+    "Affine Cipher",
+    "Hill Cipher"
 ]
 
 def fetch(entries):
@@ -33,17 +33,19 @@ def fetch(entries):
     #     print('%s: "%s"' % (field, text))
     # print(getKey(entries), getText(entries), entries[0][1].get(), entries[3][1].get())
 
-    if (entries[2][1].get() == "Vigenere Chiper"):
+    if (entries[2][1].get() == "Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             pass
         elif (entries[1][1].get() == "Decrypt"):
             pass
-    elif (entries[2][1].get() == "Affine Chiper"):
+
+    elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             print(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
         elif (entries[1][1].get() == "Decrypt"):
             print(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
-    elif (entries[2][1].get() == "Hill Chiper"):
+
+    elif (entries[2][1].get() == "Hill Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             print(hill.encrypt(getText(entries), getKey(entries)))
         elif (entries[1][1].get() == "Decrypt"):
