@@ -52,13 +52,4 @@ def textToMatrix(text, m):
             text_matrix[i].append((ord(text[m * i + j]) - 97) % 26)
     return(text_matrix)
 
-def getDet(matrix):
-    return round(np.linalg.det(matrix) % 26)
-
-def getTranspose(matrix):
-    return np.transpose(matrix)
-
-def getTranspose2D(matrix):
-    return np.transpose(matrix)
-
 # print(encrypt("halo", [[3,1],[2,3]]), decrypt(encrypt("halo", [[3,1],[2,3]]), [[3,1],[2,3]]))
