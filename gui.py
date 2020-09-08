@@ -1,31 +1,111 @@
 import tkinter as tk
-import affine
+from tkinter import filedialog
+import affine, hill
 
-def show_entry_fields():
-    print("Encrypt: %s\nDecript: %s" % (affine.encrypt(e1.get(), 3, 1), affine.decrypt(e2.get(), 3, 1)))
+fields_text = 'Text', 'Key'
+fields_menu = 'Input Type', 'Action', 'Algorithm'
 
-master = tk.Tk()
-tk.Label(master, 
-         text="Encrypt").grid(row=0)
-tk.Label(master, 
-         text="Decript").grid(row=1)
+input_types = [
+    "Text",
+    "File"
+] 
 
-e1 = tk.Entry(master)
-e2 = tk.Entry(master)
+actions = [
+    "Encrypt",
+    "Decrypt"
+]
 
-e1.grid(row=0, column=1)
-e2.grid(row=1, column=1)
+algorithms = [
+    "Vigenere Cipher",
+    "Full Vigenere Cipher",
+    "Auto Vigenere Cipher",
+    "Extended Vigenere Cipher",
+    "Playfair Cipher",
+    "Super Enkripsi",
+    "Affine Chiper",
+    "Hill Chiper"
+]
 
-tk.Button(master, 
-          text='Quit', 
-          command=master.quit).grid(row=3, 
-                                    column=0, 
-                                    sticky=tk.W, 
-                                    pady=4)
-tk.Button(master, 
-          text='Show', command=show_entry_fields).grid(row=3, 
-                                                       column=1, 
-                                                       sticky=tk.W, 
-                                                       pady=4)
+def fetch(entries):
+    # for entry in entries:
+    #     field = entry[0]
+    #     text  = entry[1].get()
+    #     print('%s: "%s"' % (field, text))
+    # print(getKey(entries), getText(entries), entries[0][1].get(), entries[3][1].get())
 
-tk.mainloop()
+    if (entries[2][1].get() == "Vigenere Chiper"):
+        if (entries[1][1].get() == "Encrypt"):
+            pass
+        elif (entries[1][1].get() == "Decrypt"):
+            pass
+    elif (entries[2][1].get() == "Affine Chiper"):
+        if (entries[1][1].get() == "Encrypt"):
+            print(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+        elif (entries[1][1].get() == "Decrypt"):
+            print(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+    elif (entries[2][1].get() == "Hill Chiper"):
+        if (entries[1][1].get() == "Encrypt"):
+            hill.encrypt(getText(entries), getKey(entries))
+        elif (entries[1][1].get() == "Decrypt"):
+            hill.decrypt(getText(entries), getKey(entries))
+
+def getText(entries):
+    if (entries[0][1].get() == "Text"):
+        return entries[3][1].get()
+    elif (entries[0][1].get() == "File"):
+        pass # baca dari file
+
+def getKey(entries):
+    result = []
+    for elmt in entries[4][1].get().split(' ') :
+        result.append(elmt.split(','))
+    return result
+
+def UploadAction(event=None):
+    filename = filedialog.askopenfilename()
+    print('Selected:', filename)
+
+def chooseMenu(menu_label):
+    if (menu_label == "Input Type"):
+        return input_types
+    elif (menu_label == "Action"):
+        return actions
+    else:
+        return algorithms
+
+def makeMenu(root, fields, entries):
+    for field in fields:
+        variable = tk.StringVar(root)
+        variable.set(field)
+        opt = tk.OptionMenu(root, variable, *chooseMenu(field))
+        opt.config(width=60)
+        opt.pack()
+        entries.append((field, variable))
+    return entries
+
+def makeForm(root, fields, entries):
+    for field in fields:
+        row = tk.Frame(root)
+        lab = tk.Label(row, width=15, text=field, anchor='w')
+        ent = tk.Entry(row, width=45)
+        row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+        lab.pack(side=tk.LEFT)
+        ent.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
+        entries.append((field, ent))
+    return entries
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    entries = []
+    ents = makeMenu(root, fields_menu, entries)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    ents = makeForm(root, fields_text, ents)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    b1 = tk.Button(root, text='Show',
+                  command=(lambda e=ents: fetch(e)))
+    b1.pack(side=tk.LEFT, padx=3, pady=5)
+    b2 = tk.Button(root, text='Upload', command=UploadAction)
+    b2.pack(side=tk.LEFT, padx=3, pady=5)
+    b2 = tk.Button(root, text='Quit', command=root.quit)
+    b2.pack(side=tk.LEFT, padx=3, pady=5)
+    root.mainloop()

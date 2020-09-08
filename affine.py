@@ -19,5 +19,5 @@ def modInverse(a, m) :
             return x 
     return 1
 
-print(encrypt('halo', 3, 1))
-print(decrypt(encrypt('halo', 3, 1), 3, 1))
+# print(encrypt('halo', 3, 1))
+# print(decrypt(encrypt('halo', 3, 1), 3, 1))
