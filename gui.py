@@ -45,9 +45,9 @@ def fetch(entries):
             print(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
     elif (entries[2][1].get() == "Hill Chiper"):
         if (entries[1][1].get() == "Encrypt"):
-            hill.encrypt(getText(entries), getKey(entries))
+            print(hill.encrypt(getText(entries), getKey(entries)))
         elif (entries[1][1].get() == "Decrypt"):
-            hill.decrypt(getText(entries), getKey(entries))
+            print(hill.decrypt(getText(entries), getKey(entries)))
 
 def getText(entries):
     if (entries[0][1].get() == "Text"):

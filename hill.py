@@ -1,7 +1,8 @@
 import numpy as np
 
-def encrypt(plaintext, m, matrix):
+def encrypt(plaintext, matrix):
     result = ""
+    m = len(matrix)
     matrix = toIntMatrix(matrix)
 
     for adds in range(len(plaintext) % m + 1):
@@ -10,16 +11,16 @@ def encrypt(plaintext, m, matrix):
     plaintext_matrix = textToMatrix(plaintext, m)
 
     for chunk in plaintext_matrix:
-        print('chunk', chunk)
+        # print('chunk', chunk)
         temp_matrix = np.matmul(matrix, chunk)
-        print('temp_matrix', temp_matrix)
+        # print('temp_matrix', temp_matrix)
         for character in temp_matrix:
-            print('character', character % 26)
+            # print('character', character % 26)
             result += chr(character % 26 + 97)
     
     return result
 
-def decrypt(chipertext, m, matrix):
+def decrypt(chipertext, matrix):
     result = ""
     return result
 
