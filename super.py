@@ -1,3 +1,17 @@
+def encrypt(plaintext, key):
+    result = "" #insert simple vigenere here
+
+    result = encrypt_transposisi(result)
+    
+    return result
+
+def decrypt(ciphertext, key):
+    result = decrypt_transposisi(ciphertext)
+
+    result = "" #insert simple vigenere here
+
+    return result
+
 def encrypt_transposisi(text):
     result = ""
 
