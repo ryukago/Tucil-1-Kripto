@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import Label, StringVar, filedialog
 import affine, hill
 import string
 
@@ -27,12 +27,16 @@ algorithms = [
     "Hill Cipher"
 ]
 
+result = ""
+spaced_result = ""
+
 def fetch(entries):
     # for entry in entries:
     #     field = entry[0]
     #     text  = entry[1].get()
     #     print('%s: "%s"' % (field, text))
     # print(getKey(entries), getText(entries), entries[0][1].get(), entries[3][1].get())
+    global result
 
     if (entries[2][1].get() == "Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
@@ -42,15 +46,20 @@ def fetch(entries):
 
     elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            print(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+            result.set(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
         elif (entries[1][1].get() == "Decrypt"):
-            print(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+            result.set(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
 
     elif (entries[2][1].get() == "Hill Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            print(hill.encrypt(getText(entries), getKey(entries)))
+            result.set(hill.encrypt(getText(entries), getKey(entries)))
         elif (entries[1][1].get() == "Decrypt"):
-            print(hill.decrypt(getText(entries), getKey(entries)))
+            result.set(hill.decrypt(getText(entries), getKey(entries)))
+            
+    if (entries[1][1].get() == "Encrypt"):
+        spaced_result.set(getSpacedResult(result.get()))
+    elif (entries[1][1].get() == "Decrypt"):
+        spaced_result.set("")
 
 def getText(entries):
     if (entries[0][1].get() == "Text"):
@@ -104,13 +113,31 @@ def makeForm(root, fields, entries):
         entries.append((field, ent))
     return entries
 
+def getSpacedResult(ciphertext):
+    result = ""
+    for i in range(len(ciphertext)):
+        if (i % 5 == 0):
+            result += " "
+        result += ciphertext[i]
+    return(result)
+
 if __name__ == '__main__':
     root = tk.Tk()
+
     entries = []
     ents = makeMenu(root, fields_menu, entries)
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))
+    
     ents = makeForm(root, fields_text, ents)
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))
+
+    result = StringVar()
+    spaced_result = StringVar()
+
+    Label(root, textvariable=result).pack()
+    Label(root, textvariable=spaced_result).pack()
+
+
     b1 = tk.Button(root, text='Show',
                   command=(lambda e=ents: fetch(e)))
     b1.pack(side=tk.LEFT, padx=3, pady=5)
@@ -118,4 +145,5 @@ if __name__ == '__main__':
     b2.pack(side=tk.LEFT, padx=3, pady=5)
     b2 = tk.Button(root, text='Quit', command=root.quit)
     b2.pack(side=tk.LEFT, padx=3, pady=5)
+
     root.mainloop()
