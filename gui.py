@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Label, StringVar, filedialog
-import affine, hill
+import affine, hill, playfair
 import string
 
 fields_text = 'Text', 'Key'
@@ -45,6 +45,12 @@ def fetch(entries):
         elif (entries[1][1].get() == "Decrypt"):
             pass
 
+    elif (entries[2][1].get() == "Playfair Cipher"):
+        if (entries[1][1].get() == "Encrypt"):
+            res = playfair.encrypt(getText(entries), getKey(entries))
+        elif (entries[1][1].get() == "Decrypt"):
+            res = playfair.decrypt(getText(entries), getKey(entries))
+
     elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0]))
@@ -84,10 +90,13 @@ def getText(entries):
         pass # baca dari file
 
 def getKey(entries):
-    result = []
-    for elmt in entries[4][1].get().split(' ') :
-        result.append(elmt.split(','))
-    return result
+    if (entries[2][1].get() == "Playfair Cipher"):
+        return  entries[4][1].get()
+    else:        
+        result = []
+        for elmt in entries[4][1].get().split(' ') :
+            result.append(elmt.split(','))
+        return result
 
 def UploadAction(event=None):
     filename = filedialog.askopenfilename()

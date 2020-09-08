@@ -116,6 +116,6 @@ def getPotongan(a, b, key):
     return (key[y_a * 5 + x_b] + key[y_b * 5 + x_a])
 
 # print(isSameY("b", "u", makeKey("bajubaru")))
-plaintext = "temuiibunantimalam"
-key = "JALAN GANESHA SEPULUH"
-print(encrypt(plaintext, key), decrypt(encrypt(plaintext, key), key))
+# plaintext = "temuiibunantimalam"
+# key = "JALAN GANESHA SEPULUH"
+# print(encrypt(plaintext, key), decrypt(encrypt(plaintext, key), key))
