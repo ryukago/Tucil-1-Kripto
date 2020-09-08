@@ -146,7 +146,6 @@ if __name__ == '__main__':
     Label(root, textvariable=result).pack()
     Label(root, textvariable=spaced_result).pack()
 
-
     b1 = tk.Button(root, text='Show',
                   command=(lambda e=ents: fetch(e)))
     b1.pack(side=tk.LEFT, padx=3, pady=5)
