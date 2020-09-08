@@ -36,7 +36,8 @@ def fetch(entries):
     #     text  = entry[1].get()
     #     print('%s: "%s"' % (field, text))
     # print(getKey(entries), getText(entries), entries[0][1].get(), entries[3][1].get())
-    global result
+
+    res = ""
 
     if (entries[2][1].get() == "Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
@@ -46,19 +47,27 @@ def fetch(entries):
 
     elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            result.set(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+            res = affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0]))
         elif (entries[1][1].get() == "Decrypt"):
-            result.set(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
+            res = affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0]))
 
     elif (entries[2][1].get() == "Hill Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            result.set(hill.encrypt(getText(entries), getKey(entries)))
+            res = hill.encrypt(getText(entries), getKey(entries))
         elif (entries[1][1].get() == "Decrypt"):
-            result.set(hill.decrypt(getText(entries), getKey(entries)))
-            
-    if (entries[1][1].get() == "Encrypt"):
-        spaced_result.set(getSpacedResult(result.get()))
-    elif (entries[1][1].get() == "Decrypt"):
+            res = hill.decrypt(getText(entries), getKey(entries))
+
+    printResult(res)
+
+def printResult(res):
+    if (entries[0][1].get() == "Text"):
+        result.set(res)
+        if (entries[1][1].get() == "Encrypt"):
+            spaced_result.set(getSpacedResult(res))
+        elif (entries[1][1].get() == "Decrypt"):
+            spaced_result.set("")
+    else:
+        result.set("")
         spaced_result.set("")
 
 def getText(entries):
