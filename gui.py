@@ -46,6 +46,11 @@ def fetch(entries):
             print(vigenere.encryptStandard(getText(entries), getKey(entries)[0][0]))
         elif (entries[1][1].get() == "Decrypt"):
             print(vigenere.decryptStandard(getText(entries), getKey(entries)[0][0]))
+    elif (entries[2][1].get() == "Full Vigenere Cipher"):
+        if (entries[1][1].get() == "Encrypt"):
+            res = vigenere.encryptFull(getText(entries), getKey(entries)[0][0], int(getKey(entries)[1][0]))
+        elif (entries[1][1].get() == "Decrypt"):
+            res = vigenere.decryptFull(getText(entries), getKey(entries)[0][0], int(getKey(entries)[1][0]))
     elif (entries[2][1].get() == "Auto Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = vigenere.encryptAutoKey(getText(entries), getKey(entries)[0][0])
@@ -85,12 +90,28 @@ def printResult(res):
         elif (entries[1][1].get() == "Decrypt"):
             spaced_result.set("")
     else:
-        result.set("")
-        spaced_result.set("")
+        if (entries[1][1].get() == "Encrypt"):
+            printEncryptByteFile(res)
+            result.set("Result saved to Encrypt.txt")
+            spaced_result.set("")
+        elif (entries[1][1].get() == "Decrypt"):
+            printDecryptByteFile(res)
+            result.set("Result saved to Decrypt.txt")
+            spaced_result.set("")
 
 def printResultFile(res):
-    text_file = open("Encrypt.txt", "w")
+    text_file = open("Encrypt.txt", "w", encoding="utf-8")
     text_file.write(res)
+    text_file.close()
+
+def printEncryptByteFile(res):
+    text_file = open("Encrypt.txt", "wb")
+    text_file.write(res.encode('utf-8'))
+    text_file.close()
+
+def printDecryptByteFile(res):
+    text_file = open("Decrypt.txt", "wb")
+    text_file.write(res.encode('latin-1'))
     text_file.close()
 
 def getText(entries):
@@ -111,7 +132,19 @@ def getText(entries):
             return result.lower()
             
     elif (entries[0][1].get() == "File Random"):
-        pass # baca dari file
+        if (entries[1][1].get() == "Encrypt"):
+            file = open(filename, "rb")
+            f = file.read()
+            b = bytearray(f)
+            result = b.decode('latin-1')
+            return(result)
+        elif (entries[1][1].get() == "Decrypt"):
+            file = open(filename, "rb")
+            f = file.read()
+            b = bytearray(f)
+            result = b.decode('utf-8')
+            return(result)
+        
 
 def getKey(entries):
     if (entries[2][1].get() == "Playfair Cipher"):

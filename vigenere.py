@@ -60,8 +60,8 @@ def encryptExtended(plaintext, key):
 def decryptExtended(ciphertext, key):
     key = repeatKey(ciphertext, key)
     plaintext = [] 
-    for i in range(len(ciphertext)): 
-        x = ord(ciphertext[i]) - ord(key[i]) % 256 
+    for i in range(len(ciphertext)):
+        x = (ord(ciphertext[i]) - ord(key[i]) + 256) % 256 
         plaintext.append(chr(x)) 
     return("" . join(plaintext))
 
