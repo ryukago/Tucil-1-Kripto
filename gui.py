@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-import affine, hill
+import affine, hill, vigenere
 
 fields_text = 'Text', 'Key'
 fields_menu = 'Input Type', 'Action', 'Algorithm'
@@ -33,17 +33,27 @@ def fetch(entries):
     #     print('%s: "%s"' % (field, text))
     # print(getKey(entries), getText(entries), entries[0][1].get(), entries[3][1].get())
 
-    if (entries[2][1].get() == "Vigenere Chiper"):
+    if (entries[2][1].get() == "Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            pass
+            print(vigenere.encryptStandard(getText(entries), getKey(entries)[0][0]))
         elif (entries[1][1].get() == "Decrypt"):
-            pass
-    elif (entries[2][1].get() == "Affine Chiper"):
+            print(vigenere.decryptStandard(getText(entries), getKey(entries)[0][0]))
+    elif (entries[2][1].get() == "Auto Vigenere Cipher"):
+        if (entries[1][1].get() == "Encrypt"):
+            print(vigenere.encryptAutoKey(getText(entries), getKey(entries)[0][0]))
+        elif (entries[1][1].get() == "Decrypt"):
+            print(vigenere.decryptAutoKey(getText(entries), getKey(entries)[0][0]))
+    elif (entries[2][1].get() == "Extended Vigenere Cipher"):
+        if (entries[1][1].get() == "Encrypt"):
+            print(vigenere.encryptExtended(getText(entries), getKey(entries)[0][0]))
+        elif (entries[1][1].get() == "Decrypt"):
+            print(vigenere.decryptExtended(getText(entries), getKey(entries)[0][0]))
+    elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             print(affine.encrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
         elif (entries[1][1].get() == "Decrypt"):
             print(affine.decrypt(getText(entries), int(getKey(entries)[0][0]), int(getKey(entries)[1][0])))
-    elif (entries[2][1].get() == "Hill Chiper"):
+    elif (entries[2][1].get() == "Hill Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             print(hill.encrypt(getText(entries), getKey(entries)))
         elif (entries[1][1].get() == "Decrypt"):
