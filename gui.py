@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import affine, hill
+import string
 
 fields_text = 'Text', 'Key'
 fields_menu = 'Input Type', 'Action', 'Algorithm'
@@ -53,7 +54,14 @@ def fetch(entries):
 
 def getText(entries):
     if (entries[0][1].get() == "Text"):
-        return entries[3][1].get()
+        result = entries[3][1].get()
+        if (entries[2][1].get() == "Extended Vigenere Cipher"):
+            return result
+        else:
+            result = result.replace(" ", "")
+            result = ''.join(i for i in result if not i.isdigit())
+            result = result.translate(str.maketrans('', '', string.punctuation))
+            return result.lower()
     elif (entries[0][1].get() == "File"):
         pass # baca dari file
 
