@@ -5,7 +5,6 @@ def encrypt(plaintext, key):
     i = 0
     plaintext = makePlaintext(plaintext)
     key = makeKey(key)
-    key_matrix = makeKeyMatrix(key)
     
     while (i < len(plaintext)):
         a = plaintext[i]
@@ -18,13 +17,28 @@ def encrypt(plaintext, key):
             result += getDown(b, key)
         else:
             result += getPotongan(a, b, key)
-
         i += 2
     
     return result
 
 def decrypt(ciphertext, key):
     result = ""
+    i = 0
+    key = makeKey(key)
+    
+    while (i < len(ciphertext)):
+        a = ciphertext[i]
+        b = ciphertext[i+1]
+        if (isSameX(a, b, key)):
+            result += getLeft(a, key)
+            result += getLeft(b, key)
+        elif (isSameY(a, b, key)):
+            result += getUp(a, key)
+            result += getUp(b, key)
+        else:
+            result += getPotongan(a, b, key)
+        i += 2
+    
     return result
 
 def makePlaintext(text):
@@ -63,7 +77,6 @@ def makeKeyMatrix(key):
         for j in range(5):
             text_matrix[i].append(key[5 * i + j])
         print(text_matrix[i])
-    # return text_matrix
 
 def isSameX(a, b, key):
     return ((key.find(a) // 5) == (key.find(b) // 5))
@@ -105,4 +118,4 @@ def getPotongan(a, b, key):
 # print(isSameY("b", "u", makeKey("bajubaru")))
 plaintext = "temuiibunantimalam"
 key = "JALAN GANESHA SEPULUH"
-print(encrypt(plaintext, key))
+print(encrypt(plaintext, key), decrypt(encrypt(plaintext, key), key))
