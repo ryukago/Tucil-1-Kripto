@@ -5,9 +5,9 @@ def encrypt(plaintext, m, b):
         result += chr(x_new + 97)
     return result
 
-def decrypt(chipertext, m, b):
+def decrypt(ciphertext, m, b):
     result = ""
-    for x in chipertext:
+    for x in ciphertext:
         x_new  = modInverse(m, 26)*((ord(x) - 97)-b) % 26
         result += chr(x_new + 97)
     return result

@@ -1,27 +1,35 @@
 import numpy as np
+from sympy import Matrix
 
 def encrypt(plaintext, matrix):
     result = ""
     m = len(matrix)
     matrix = toIntMatrix(matrix)
 
-    for adds in range(len(plaintext) % m + 1):
-        plaintext += 'z'
-
     plaintext_matrix = textToMatrix(plaintext, m)
 
     for chunk in plaintext_matrix:
-        # print('chunk', chunk)
         temp_matrix = np.matmul(matrix, chunk)
-        # print('temp_matrix', temp_matrix)
         for character in temp_matrix:
-            # print('character', character % 26)
             result += chr(character % 26 + 97)
     
     return result
 
-def decrypt(chipertext, matrix):
+def decrypt(ciphertext, matrix):
     result = ""
+    m = len(matrix)
+    matrix = toIntMatrix(matrix)
+
+    plaintext_matrix = textToMatrix(ciphertext, m)
+
+    inv_matrix = Matrix(matrix)
+    inv_matrix = inv_matrix.inv_mod(26)
+
+    for chunk in plaintext_matrix:
+        temp_matrix = np.matmul(inv_matrix, chunk)
+        for character in temp_matrix:
+            result += chr(character % 26 + 97)
+
     return result
 
 def toIntMatrix(matrix):
@@ -34,11 +42,14 @@ def toIntMatrix(matrix):
 def textToMatrix(text, m):
     text_matrix = []
     size = m
+
+    for adds in range(len(text) % m + 1):
+        text += 'z'
+
     for i in range(len(text) // m):
         text_matrix.append([])
         for j in range(m):
             text_matrix[i].append((ord(text[m * i + j]) - 97) % 26)
     return(text_matrix)
 
-# matrix = [[1, 2], [3, 4]]
-# print(encrypt("halo", len(matrix), matrix))
+# print(encrypt("halo", [[3,1],[2,3]]), decrypt(encrypt("halo", [[3,1],[2,3]]), [[3,1],[2,3]]))
