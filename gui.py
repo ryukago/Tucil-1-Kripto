@@ -106,7 +106,7 @@ def printResult(res):
             spaced_result.set("")
         elif (entries[1][1].get() == "Decrypt"):
             printDecryptByteFile(res)
-            result.set("Result saved to Decrypt.txt")
+            result.set("Result saved to Decrypt, add formatting accordingly")
             spaced_result.set("")
 
 def printResultFile(res):
