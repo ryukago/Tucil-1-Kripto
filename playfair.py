@@ -42,6 +42,7 @@ def decrypt(ciphertext, key):
     return result
 
 def makePlaintext(text):
+    text = text.replace('j', 'i')
     temp = text[0]
     result = text[0]
     for i in range(1, len(text)):
