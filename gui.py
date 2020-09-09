@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Label, StringVar, filedialog
-import affine, hill, playfair, vigenere
+import affine, hill, playfair, vigenere, supere
 import string
 
 fields_text = 'Text', 'Key'
@@ -43,29 +43,39 @@ def fetch(entries):
 
     if (entries[2][1].get() == "Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
-            print(vigenere.encryptStandard(getText(entries), getKey(entries)[0][0]))
+            res = vigenere.encryptStandard(getText(entries), getKey(entries)[0][0])
         elif (entries[1][1].get() == "Decrypt"):
-            print(vigenere.decryptStandard(getText(entries), getKey(entries)[0][0]))
+            res = vigenere.decryptStandard(getText(entries), getKey(entries)[0][0])
+
     elif (entries[2][1].get() == "Full Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = vigenere.encryptFull(getText(entries), getKey(entries)[0][0], int(getKey(entries)[1][0]))
         elif (entries[1][1].get() == "Decrypt"):
             res = vigenere.decryptFull(getText(entries), getKey(entries)[0][0], int(getKey(entries)[1][0]))
+
     elif (entries[2][1].get() == "Auto Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = vigenere.encryptAutoKey(getText(entries), getKey(entries)[0][0])
         elif (entries[1][1].get() == "Decrypt"):
             res = vigenere.decryptAutoKey(getText(entries), getKey(entries)[0][0])
+
     elif (entries[2][1].get() == "Extended Vigenere Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = vigenere.encryptExtended(getText(entries), getKey(entries)[0][0])
         elif (entries[1][1].get() == "Decrypt"):
             res = vigenere.decryptExtended(getText(entries), getKey(entries)[0][0])
+
     elif (entries[2][1].get() == "Playfair Cipher"):
         if (entries[1][1].get() == "Encrypt"):
             res = playfair.encrypt(getText(entries), getKey(entries))
         elif (entries[1][1].get() == "Decrypt"):
             res = playfair.decrypt(getText(entries), getKey(entries))
+
+    elif (entries[2][1].get() == "Super Enkripsi"):
+        if (entries[1][1].get() == "Encrypt"):
+            res = supere.encrypt(getText(entries), getKey(entries)[0][0])
+        elif (entries[1][1].get() == "Decrypt"):
+            res = supere.decrypt(getText(entries), getKey(entries)[0][0])
 
     elif (entries[2][1].get() == "Affine Cipher"):
         if (entries[1][1].get() == "Encrypt"):
