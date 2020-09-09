@@ -47,7 +47,10 @@ def makePlaintext(text):
     result = text[0]
     for i in range(1, len(text)):
         if (text[i] == temp):
-            result += 'x'
+            if (text[i] == 'x'):
+                result += 'z'
+            else:
+                result += 'x'
         result += text[i]
         temp = text[i]
     if (len(result) % 2 != 0):
