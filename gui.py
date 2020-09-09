@@ -120,7 +120,7 @@ def printEncryptByteFile(res):
     text_file.close()
 
 def printDecryptByteFile(res):
-    text_file = open("Decrypt.txt", "wb")
+    text_file = open("Decrypt", "wb")
     text_file.write(res.encode('latin-1'))
     text_file.close()
 

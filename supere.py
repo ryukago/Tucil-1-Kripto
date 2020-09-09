@@ -41,4 +41,4 @@ def decrypt_transposisi(text):
     return result
 
 # print(encrypt_transposisi("jalanjalankepasar"), '\n', decrypt_transposisi(encrypt_transposisi("jalanjalankepasar")))
-print(encrypt("halohalobandung", "wow"), '\n', decrypt(encrypt("halohalobandung", "wow"), "wow"))
+# print(encrypt("halohalobandung", "wow"), '\n', decrypt(encrypt("halohalobandung", "wow"), "wow"))
